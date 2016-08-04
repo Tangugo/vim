@@ -47,6 +47,7 @@ ImportError: No module named waitress
 发现报错源，顺藤摸瓜，于是到[PyPi](https://pypi.python.org/pypi)(*几乎所有python的第三方库在此处都能找到*)查找[waitress](https://pypi.python.org/pypi/waitress/1.0a2)模块，下载安装后，完美解决了代码补全出现的问题
 
 waitress安装：
-> tar -zxvf waitress-1.0a2.tar.gz\
-> cd waitress-1.0a2\
+> tar -zxvf waitress-1.0a2.tar.gz\n
+> cd waitress-1.0a2
+
 > python setup.py install    # 注：非root用户需在命令前加上 `sudo`
