@@ -13,12 +13,13 @@ Bundle 'gmarik/Vundle.vim'
 "Bundle 'FredKSchott/CoVim'
 
 " 代码补全
-"Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
-"Bundle 'YanhaoMo/snippets'
+Bundle 'YanhaoMo/snippets'
+
 " Python代码补全
-Bundle 'Pydiction'
+"Bundle 'Pydiction'
 
 " 符号自动补全
 Bundle 'Raimondi/delimitMate'
@@ -44,6 +45,7 @@ Bundle 'tomasr/molokai'
 Bundle 'morhetz/gruvbox'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'bling/vim-airline'
+"Bundle 'vim-airline-themes'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'solarized'
 Bundle 'jpo/vim-railscasts-theme'
@@ -57,7 +59,7 @@ Bundle 'ZenCoding.vim'
 " 多光标操作
 Bundle 'terryma/vim-multiple-cursors'
 " 成对符号编辑
-Bundle 'tpope/surround.vim'
+Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 
 " 快速注释
@@ -171,7 +173,6 @@ set ttyfast                                                     " 平滑地变�
 set cc=80                                                       " 第80字符处显示分隔符
 set foldmethod=indent                                           " 折叠方式
 set nofoldenable                                                " 不自动折叠
-"set completeopt-=preview,menu,longest                           " 让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 set foldcolumn=1                                                " 在行号前空出一列的宽度
 set t_Co=256                                                    " 设置256真彩色
 set history=1000                                                " 设置历史记录条数
@@ -183,7 +184,7 @@ set history=1000                                                " 设置历史�
 set list lcs=tab:\♠\ ,trail:•                                   " 显示tab键为♠，并且显示每行结尾的空格为'•'
 " 一些备用字符:›┆┇┊┋♠♦•
 
-" 我的状态行显示的内容
+" 格式化状态行显示的内容
 set statusline=[%t]\ %y\ %m%=%{&fileencoding}\ [%{&ff}]\ [%l,\ %c]\ [%L]\ [%p%%]
 
 " 打开一个文件自动定位到上一次退出的位置
@@ -267,6 +268,23 @@ if has("cscope")
 endif
 
 
+" *********** nerdcommenter快速注释插件配置 **********
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+
 " *********** syntastic插件配置 ***********
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -283,71 +301,109 @@ let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_
 
 
 " ********** pydiction补全设置 **********
-let g:pydiction_location = '~/.vim/bundle/Pydiction/complete-dict'
-"defalut g:pydiction_menu_height == 15
-let g:pydiction_menu_height = 10
+"let g:pydiction_location = '~/.vim/bundle/Pydiction/complete-dict'
+""defalut g:pydiction_menu_height == 15
+"let g:pydiction_menu_height = 10
 
 
 " ********** youcompleteme自动补全配置 ***********
-"let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-"set completeopt=preview,longest,menu        " 让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
-"autocmd InsertLeave * if pumvisible() == 0|pclose|endif     " 离开插入模式后自动关闭预览窗口
-"inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"    "回车即选中当前项
-"
-"" 上下左右键的行为 会显示其他信息
-"inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-"inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-"inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-"inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-"
-"" youcompleteme  默认tab  s-tab 和自动补全冲突
-"let g:ycm_key_list_select_completion=['<c-n>']
-"let g:ycm_key_list_select_completion = ['<Down>']
-"let g:ycm_key_list_previous_completion=['<c-p>']
-"let g:ycm_key_list_previous_completion = ['<Up>']
-"
-"let g:ycm_confirm_extra_conf=0      "关闭加载.ycm_extra_conf.py提示
-"let g:ycm_collect_identifiers_from_tags_files=1     " 开启 YCM 基于标签引擎
-"let g:ycm_min_num_of_chars_for_completion=2     " 从第2个键入字符就开始罗列匹配项
-"let g:ycm_cache_omnifunc=0      " 禁止缓存匹配项,每次都重新生成匹配项
-"let g:ycm_seed_identifiers_with_syntax=1   " 语法关键字补全
-"let g:ycm_complete_in_comments = 1      " 在注释输入中也能补全
-"let g:ycm_complete_in_strings = 1       " 在字符串输入中也能补全
-"let g:ycm_collect_identifiers_from_comments_and_strings = 0     " 注释和字符串中的文字也会被收入补全
-"
-""nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>   "force recomile with syntastic
-""nnoremap <leader>lo :lopen<CR>    "open locationlist
-""nnoremap <leader>lc :lclose<CR>    "close locationlist
-"nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处"
-"inoremap <leader><leader> <C-x><C-o>
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+"let g:ycm_python_binary_path = 'python'
+set completeopt=longest,menu    "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后自动关闭预览窗口
+inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"    "回车即选中当前项
+"上下左右键的行为 会显示其他信息
+inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
+inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+" 跳转到定义处
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>    "force recomile with syntastic
+" nnoremap <leader>lo :lopen<CR>    "open locationlist
+" nnoremap <leader>lc :lclose<CR>   "close locationlist
+inoremap <leader><leader> <C-x><C-o>
 
 
-"let g:ycm_seed_identifiers_with_syntax=1    " 语法关键字补全
-"let g:ycm_collect_identifiers_from_tags_files=1 " 开启 YCM 基于标签引擎
-"let g:ycm_error_symbol = '✗'
-"let g:ycm_warning_symbol = '⚡'
-"let g:ycm_add_preview_to_completeopt = 0                "不显示预览窗口
-""let g:ycm_autoclose_preview_window_after_insertion = 1
-""let g:ycm_autoclose_preview_window_after_completion = 1
-"let g:ycm_key_list_select_completion = ['<c-n>', '<Down>', '<CR>']
-"let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
-"let g:ycm_semantic_triggers = {
-"            \ 'c' : ['->', '.', ' ', '(', '[', '&'],
-"            \ 'objc' : ['->', '.'],
-"            \ 'ocalml' : ['.', '#'],
-"            \ 'cpp,objcpp' : ['->', '.', ' ', '(', '[', '&', '::'],
-"            \ 'perl' : ['->', '::'],
-"            \ 'php' : ['->', '::', '.'],
-"            \ 'cs,java,javascript,d,python,perl6,scala,vb,elixir,go' : ['.'],
-"            \ 'vim' : ['re![_a-zA-Z]+[_\w]*\.'],
-"            \ 'ruby' : ['.', '::'],
-"            \ 'lua' : ['.', ':'],
-"            \ 'erlang' : ['.', ':']
-"            \ }
+" 不显示开启vim时检查ycm_extra_conf文件的信息  
+let g:ycm_confirm_extra_conf=0
+" 开启基于tag的补全，可以在这之后添加需要的标签路径  
+let g:ycm_collect_identifiers_from_tags_files=1
+"注释和字符串中的文字也会被收入补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 0
+" 输入第2个字符开始补全
+let g:ycm_min_num_of_chars_for_completion=2
+" 禁止缓存匹配项,每次都重新生成匹配项
+let g:ycm_cache_omnifunc=0
+" 开启语义补全
+let g:ycm_seed_identifiers_with_syntax=1    
+"在注释输入中也能补全
+let g:ycm_complete_in_comments = 1
+"在字符串输入中也能补全
+let g:ycm_complete_in_strings = 1
+" 设置在下面几种格式的文件上屏蔽ycm
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'nerdtree' : 1,
+      \}
+"youcompleteme  默认tab  s-tab 和 ultisnips 冲突
+let g:ycm_key_list_select_completion = ['<Down>']
+let g:ycm_key_list_previous_completion = ['<Up>']
+" 修改对C函数的补全快捷键，默认是CTRL + space，修改为ALT + ;
+let g:ycm_key_invoke_completion = '<M-;>'
 
-"let g:ycm_key_invoke_completion = '<C-a>'       " 主动调用补全
-"" 定义跳转到定义或声明
-"nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" SirVer/ultisnips 代码片断
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsListSnippets="<c-e>"
+"定义存放代码片段的文件夹，使用自定义和默认的，将会的到全局，有冲突的会提示
+let g:UltiSnipsSnippetDirectories=["~/.vim/bundle/vim-snippets/UltiSnips"]
+
+" 参考https://github.com/Valloric/YouCompleteMe/issues/36#issuecomment-62941322
+" 解决ultisnips和ycm tab冲突，如果不使用下面的办法解决可以参考
+" https://github.com/Valloric/YouCompleteMe/issues/36#issuecomment-63205056的配置
+" begin
+" let g:ycm_key_list_select_completion=['<C-n>', '<Down>']
+" let g:ycm_key_list_previous_completion=['<C-p>', '<Up>']
+" let g:UltiSnipsExpandTrigger="<Tab>"
+" let g:UltiSnipsJumpForwardTrigger="<Tab>"                                           
+" let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
+" end
+" UltiSnips completion function that tries to expand a snippet. If there's no
+" snippet for expanding, it checks for completion window and if it's
+" shown, selects first element. If there's no completion window it tries to
+" jump to next placeholder. If there's no placeholder it just returns TAB key 
+function! g:UltiSnips_Complete()
+    call UltiSnips#ExpandSnippet()
+    if g:ulti_expand_res == 0
+        if pumvisible()
+            return "\<C-n>"
+        else
+            call UltiSnips#JumpForwards()
+            if g:ulti_jump_forwards_res == 0
+               return "\<TAB>"
+            endif
+        endif
+    endif
+    return ""
+endfunction
+
+au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
+
+" Expand snippet or return
+let g:ulti_expand_res = 1
+function! Ulti_ExpandOrEnter()
+    call UltiSnips#ExpandSnippet()
+    if g:ulti_expand_res
+        return ''
+    else
+        return "\<return>"
+endfunction
+
+" Set <space> as primary trigger
+inoremap <return> <C-R>=Ulti_ExpandOrEnter()<CR>
 
 
 " ********** indentLine插件 **********
@@ -400,6 +456,9 @@ let g:multi_cursor_quit_key='<Esc>'
 
 " ********** airline插件配置 ***********
 let g:airline_powerline_fonts=1     "配置airline使用powerline字体
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#left_sep = ' '
+"let g:airline#extensions#tabline#left_alt_sep = '|'
 
 
 " *********** vimwiki插件配置 ***********
@@ -424,7 +483,6 @@ let g:pymode_rope = 0
 let g:pymode_floding = 0
 
 
-
 " *********** 重新映射一些键 **********
 " 设置以空格打开和关闭折叠
 nmap <space> @=((foldclosed(line('.'))<0)?'zc':'zo')<CR>
@@ -437,8 +495,8 @@ map k gk
 im jj <Esc>
 im JJ <Esc>
 im zz <Esc>
-map zz <Esc>
 im ZZ <Esc>
+map zz <Esc>
 map ZZ <Esc>
 
 " quickfix相关的一些快捷键
@@ -554,7 +612,7 @@ map <F7> :!cscope -Rbq<CR>
 im <F7> <Esc>:!cscope -Rbq<CR>
 
 " 修改<leader>的键盘映射
-nmap , <leader>
+nmap ' <leader>
 " 当按下\+Enter时取消搜索高亮
 map <silent> <leader><CR> :noh<CR>
 
@@ -611,10 +669,10 @@ func! SetHead()
 "        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
     else
         call setline(1, "/*************************************************************************")
-        call append(line("."), "	> File Name: ".expand("%"))
-        call append(line(".")+1, "	> Author: ")
-        call append(line(".")+2, "	> Mail: ")
-        call append(line(".")+3, "	> Created Time: ".strftime("%c"))
+        call append(line("."), "    > File Name: ".expand("%"))
+        call append(line(".")+1, "  > Author: ")
+        call append(line(".")+2, "  > Mail: ")
+        call append(line(".")+3, "  > Created Time: ".strftime("%c"))
         call append(line(".")+4, " ************************************************************************/")
         call append(line(".")+5, "")
     endif
