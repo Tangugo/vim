@@ -319,7 +319,7 @@ inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDow
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 " 跳转到定义处
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <F6> :YcmForceCompileAndDiagnostics<CR>    "force recomile with syntastic
+nnoremap <F4> :YcmForceCompileAndDiagnostics<CR>    "force recomile with syntastic
 " nnoremap <leader>lo :lopen<CR>    "open locationlist
 " nnoremap <leader>lc :lclose<CR>   "close locationlist
 inoremap <leader><leader> <C-x><C-o>
@@ -524,9 +524,9 @@ imap <F3> <ESC> :NERDTreeToggle<CR>
 " 打开树状文件目录
 map <C-F3> \be
 
-" <F4>生成ctags
-map <F4> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-im <F4> <Esc>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+" <F7>生成ctags
+map <F7> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+im <F7> <Esc>:!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 nmap go g<C-]>
 nmap bk <C-t>
 
@@ -570,19 +570,19 @@ func! CompileRunGcc()
 endfunc
 
 " C,C++的调试
-map <F8> :call Rungdb()<CR>
+map <F6> :call Rungdb()<CR>
 func! Rungdb()
     exec "w"
     exec "!g++ % -g -o %<"
     exec "!gdb ./%<"
 endfunc
 
-" <F6>语法检查
-map <F6> :SyntasticCheck<CR>
-im <F6> <Esc>:SyntasticCheck<CR>
+" <F4>语法检查
+map <F4> :SyntasticCheck<CR>
+im <F4> <Esc>:SyntasticCheck<CR>
 
 "" 代码格式优化化
-"map <F6> :call FormartSrc()<CR><CR>
+"map <F4> :call FormartSrc()<CR><CR>
 "" 定义FormartSrc()
 "func FormartSrc()
 "    exec "w"
@@ -607,9 +607,9 @@ im <F6> <Esc>:SyntasticCheck<CR>
 "    exec "e! %"
 "endfunc
 
-" <F7>更新cscope文件
-map <F7> :!cscope -Rbq<CR>
-im <F7> <Esc>:!cscope -Rbq<CR>
+" <F8>更新cscope文件
+map <F8> :!cscope -Rbq<CR>
+im <F8> <Esc>:!cscope -Rbq<CR>
 
 " 修改<leader>的键盘映射
 nmap ' <leader>
