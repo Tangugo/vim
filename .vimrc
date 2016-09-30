@@ -1,5 +1,6 @@
 " ************* Vundle 配置 ****************
-filetype off     " 侦测文件类型
+" 侦测文件类型 
+filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
@@ -54,6 +55,10 @@ Bundle 'jpo/vim-railscasts-theme'
 
 " 代码bug追踪
 Bundle 'ZenCoding.vim'
+
+" 模仿sublime text 的 ctrl + shift + f 在工程中全局查找某字符
+" 需先安装ack: sudo apt-get install ack
+Bundle 'dyng/ctrlsf.vim'
 
 " 编辑增强
 " 多光标操作
@@ -483,6 +488,27 @@ let g:pymode_rope = 0
 let g:pymode_floding = 0
 
 
+" ********** Emmet--> html插件 **********
+let g:user_emmet_expandabbr_key = '<Tab>'
+let g:user_emmet_settings = {
+            \ 'php' : {
+            \ 'extends' : 'html',
+            \ 'filters' : 'c',
+            \ },
+            \ 'xml' : {
+            \ 'extends' : 'html',
+            \ },
+            \ 'haml' : {
+            \ 'extends' : 'html',
+            \ },
+            \}
+
+
+" ********** vim write django **********
+" au FileType python set ft=python.django
+" au FileType html set ft=htmldjango.html
+
+
 " *********** 重新映射一些键 **********
 " 设置以空格打开和关闭折叠
 nmap <space> @=((foldclosed(line('.'))<0)?'zc':'zo')<CR>
@@ -540,6 +566,19 @@ nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
 " <F5>编译运行
+" map <F5> :Autopep8<CR> :w<CR> :call RunPython()<CR>
+" function RunPython()
+"     let mp = &makeprg
+"     let ef = &errorformat
+"     let exeFile = expand("%:t")
+"     setlocal makeprg=python\ -u
+"     set efm=%C\ %.%#,%A\ \ File\ \"%f\",\ line\ %l%.%#,%Z%[%^\ ]%@=%m
+"     silent make %
+"     copen
+"     let &makeprg = mp
+"     let &errorformat = ef
+" endfunction
+
 :autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
 " C，C++ 按F5编译运行
 map <F5> :call CompileRunGcc()<CR>
@@ -623,7 +662,9 @@ map <leader>f :NERDTreeToggle<CR>
 
 " Tagbar插件配置
 let g:tagbar_autoclose=1
-map <leader>t :TagbarToggle<CR>
+"map <leader>t :TagbarToggle<CR>
+map <F2> :TagbarToggle<CR>
+"
 " 设置文件类型辅助
 map <leader>s :setfiletype
 " 更方便的窗口间跳转
@@ -648,6 +689,11 @@ map <C-k> <C-b>
 map ,,j <Plug>(easymotion-w)
 map ,,k <Plug>(easymotion-b)
 map ,,s <Plug>(easymotion-s)
+
+
+" ctrlsf 插件
+map <leader>f <Plug>CtrlSFPrompt
+map <leader>F <Plug>CtrlSFQuickfixPrompt
 
 
 "********** 新建.c,.h,.sh,.java文件，自动插入文件头 **********
